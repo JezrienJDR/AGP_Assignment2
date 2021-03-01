@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class Safe : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class Safe : MonoBehaviour
     public int level;
 
     private bool Picked;
+
+    public TMP_Text timer;
+
+    private int count;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +35,10 @@ public class Safe : MonoBehaviour
 
     public void UnLock()
     {
+
+        count = 00;
+        timer.SetText(count.ToString());
+        StopCoroutine("CountDown");
         Picked = true;
         FindObjectOfType<PlayerController>().UnDim();
         FindObjectOfType<PlayerController>().PickingLock = false;
@@ -60,14 +70,38 @@ public class Safe : MonoBehaviour
         }
     }
 
+    IEnumerator CountDown()
+    {
+        while(count > 0)
+        {
+            yield return new WaitForSeconds(1);
+
+            count--;
+            timer.SetText(count.ToString());
+        }
+
+        Picked = true;
+        FindObjectOfType<PlayerController>().UnDim();
+        FindObjectOfType<PlayerController>().PickingLock = false;
+        mLock.DestroyLock();
+    }
 
     public Lock EngageLock()
     {
         if (!Picked)
         {
             mLock.BuildLock(level, this);
+    
+            count = 30;
+
+            timer.SetText(count.ToString());
+            StartCoroutine("CountDown");
+
 
         }
         return mLock;
+
+
+
     }
 }

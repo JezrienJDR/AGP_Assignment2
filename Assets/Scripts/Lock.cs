@@ -25,6 +25,8 @@ public class Lock : MonoBehaviour
 
     public Safe mSafe;
 
+    public int playerLevel;
+
     private enum segment
     {
         PLAIN = 0,
@@ -59,6 +61,8 @@ public class Lock : MonoBehaviour
 
     public void BuildLock(int numRings, Safe s)
     {
+
+        playerLevel = FindObjectOfType<PlayerController>().skill;
 
         ActiveRing = 0;
 
@@ -128,6 +132,18 @@ public class Lock : MonoBehaviour
             r.transform.localScale = new Vector3(ringScale, ringScale, 0.2f);
 
             int offset = Random.Range(1, 7);
+
+            int rando = Random.Range(1, 11);
+
+            Debug.Log(playerLevel);
+            Debug.Log(rando);
+
+
+            if(rando <= playerLevel)
+            {
+                
+                offset = 0;
+            }
 
             r.transform.Rotate(0.0f, 0.0f, 45.0f * offset);
 

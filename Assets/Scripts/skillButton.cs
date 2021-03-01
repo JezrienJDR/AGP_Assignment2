@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class skillButton : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class skillButton : MonoBehaviour
             button.position -= buttonNormal * 0.005f;
             yield return new WaitForSeconds(0.01f);
         }
+
+
+
         for (int i = 0; i < 20; i++)
         {
             button.position += buttonNormal * 0.005f;
@@ -31,6 +35,8 @@ public class skillButton : MonoBehaviour
         }
 
         FindObjectOfType<PlayerController>().skill = skill;
+        FindObjectsOfType<TMP_Text>()[0].SetText(skill.ToString());
+
     }
 
 
