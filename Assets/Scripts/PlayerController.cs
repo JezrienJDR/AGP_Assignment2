@@ -144,6 +144,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnExit(InputValue val)
+    {
+        Application.Quit();
+    }
+
     public void Dim()
     {
 
